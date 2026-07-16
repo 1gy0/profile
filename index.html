@@ -2,409 +2,352 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#8a8a8a">
     <title>일교 소개서</title>
 	<link rel="icon" href="favicon.png" />
-    <!-- 전문 슬라이드 라이브러리 (Swiper) 불러오기 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
-        /* 기본 배경 및 폰트 설정 (원본 그라데이션) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 0 10px;
-            background: linear-gradient(180deg, #f8f7f7 0%, #f8f7f7 100%);
-            background-attachment: fixed;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        /* 메인 영역 */
-        .swiper {
-            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F7F7;
+            color: #525252;
             max-width: 440px;
-            padding-top: 30px;
-            padding-bottom: 70px; /* 하단 네비게이션 및 화살표 공간 */
-        }
-
-        /* 개별 페이지 (슬라이드) */
-        .swiper-slide {
-            padding: 0 20px;
-            box-sizing: border-box;
-            height: auto; 
-        }
-
-        /* =========================================
-           하단 네비게이션 (화살표 + 점) 커스텀 
-           ========================================= */
-        .nav-container {
-            position: absolute;
-            bottom: 25px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        .custom-prev, .custom-next {
-            color: #8a8a8a;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            user-select: none;
-            transition: opacity 0.3s;
-        }
-        .custom-prev.swiper-button-disabled, 
-        .custom-next.swiper-button-disabled {
-            opacity: 0.2;
-            cursor: default;
-        }
-
-        .swiper-pagination {
-            position: relative !important;
-            bottom: 0 !important;
-            width: auto !important;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .swiper-pagination-bullet {
-            width: 7px;
-            height: 7px;
-            background-color: #d0d0d0;
-            opacity: 1;
-            border-radius: 4px;
-            transition: width 0.3s ease, background-color 0.3s;
-            margin: 0 !important;
-        }
-        .swiper-pagination-bullet-active {
-            width: 24px; 
-            background-color: #8a8a8a; 
-        }
-
-        /* =========================================
-           블록 공통 스타일 
-           ========================================= */
-        img {
-            max-width: 100%;
-            border-radius: 8px;
-            display: block;
             margin: 0 auto;
+            padding: 32px 20px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        .deco {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #b0b0b0;
-            font-size: 14px;
-            letter-spacing: 2px;
-            white-space: nowrap;
-        }
-	/* 수정된 1페이지 구분선 스타일 */
-	.divider {
-	    text-align: center;
-	    color: #a0a0a0; /* 연한 회색 */
-	    font-size: 10px; /* 작은 크기 */
-	    letter-spacing: 6px; /* 별 사이 간격 */
-	    margin: 20px 0 40px 10px; /* 위아래 여백 (10px은 자간으로 인한 쏠림 방지) */
-	}
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         
-        .heading {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            margin: 25px 0 15px 0;
+        .block {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s, transform 0.5s;
         }
+        .block.show { opacity: 1; transform: translateY(0); }
         
-        /* TMI 전용 스타일 (회색, 자간 넓게, 중앙 정렬) */
-        .tmi-heading {
-            font-size: 16px;
-            text-align: center;
-            margin: 30px 0 45px 0;
-            color: #8a8a8a; /* 회색 적용 */
-            letter-spacing: 6px; /* T M I 처럼 띄어쓰기 효과 */
+        .lp-row { box-sizing: border-box; width: 100% !important; }
+        .lp-col { box-sizing: border-box; min-width: 0; }
+        .block .lp-row { margin: 0 !important; }
+        .lp-page > .lp-row, .lp-page > .block > .lp-row { flex-shrink: 0; }
+        
+        @media(max-width: 768px) {
+            .lp-row { flex-direction: column !important; gap: 8px !important; }
+            .lp-col { flex: 1 1 100% !important; width: 100% !important; }
+            body { max-width: 100% !important; margin: 0 !important; padding-left: 16px !important; padding-right: 16px !important; }
         }
-
-        /* TMI 전용 양옆 선 구분선 스타일 */
-        .tmi-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #c0c0c0;
-            font-size: 12px;
-            margin-bottom: 55px;
-            letter-spacing: 2px;
+        @media(min-width: 769px) {
+            body { zoom: 1.05; }
         }
-        .tmi-divider::before,
-        .tmi-divider::after {
-            content: '';
-            flex: 1; /* 남은 공간을 차지하여 선을 그림 */
-            height: 1px;
-            margin: 0 15px; /* 별 기호와 선 사이의 여백 */
-        }
-        /* 왼쪽 선 그라데이션 (투명 -> 회색) */
-        .tmi-divider::before {
-            background: linear-gradient(to right, transparent, #d0d0d0);
-        }
-        /* 오른쪽 선 그라데이션 (회색 -> 투명) */
-        .tmi-divider::after {
-            background: linear-gradient(to left, transparent, #d0d0d0);
-        }
-
-        /* 텍스트 스타일 */
-        .richtext {
-            font-size: 12.5px;
-            line-height: 1.7;
-            word-break: keep-all;
-            color: #444;
-        }
-        .richtext p {
-            margin: 0; 
-            padding: 0;
-            min-height: 1em; 
-        }
-        .richtext b {
-            color: #333;
-        }
-
-        /* =========================================
-           접기/펴기 (Spoiler) 블록 
-           ========================================= */
-        details {
-            background: #ffffff;
-            border: 1px solid #eaeaea;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-        summary {
-            padding: 14px 16px;
-            font-weight: 600;
-            color: #8a8a8a;
-            cursor: pointer;
-            list-style: none;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-        summary::-webkit-details-marker { display: none; }
-        summary::before {
-            content: '▶';
-            font-size: 10px;
-            margin-right: 10px;
-            transition: transform 0.2s ease;
-            color: #b0b0b0;
-        }
-        details[open] summary::before {
-            transform: rotate(90deg);
-        }
-        details[open] summary {
-            border-bottom: 1px dashed #f0f0f0;
-        }
-        .details-content {
-            padding: 16px;
+        @media(max-width: 480px) {
+            .lp-bg-wrap { padding: 8px 4px !important; }
         }
         
-        .details-content span, 
-        .details-content font, 
-        .details-content b, 
-        .details-content i {
-            font-size: 11.5px !important;
+        a { color: inherit; text-decoration: underline; }
+        a[style] { text-decoration: none; }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            100% { transform: translateY(-20px) rotate(15deg); opacity: 0.8; }
         }
-
-        .details-content ul {
-            margin: 0;
-            padding-left: 20px;
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            100% { transform: scale(1.2); opacity: 0.9; }
         }
-        .details-content li {
-            margin-bottom: 8px;
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(90px) rotate(180deg); opacity: 0; }
         }
-        .details-content li:last-child {
-            margin-bottom: 0;
-        }
-
-        /* =========================================
-           상세 리스트 (About Detail) 블록 
-           ========================================= */
-        .about-list {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #eaeaea;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-        .about-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            font-size: 12px;
-        }
-        .about-item:last-child {
-            margin-bottom: 0;
-        }
-        .about-label {
-            font-weight: 600;
-            color: #8a8a8a;
-            flex-shrink: 0;
-            margin-right: 15px;
-        }
-        .about-value {
-            text-align: right;
-            word-break: break-word;
-            color: #444;
-        }
-        .about-value a {
-            color: #8a8a8a;
-            text-decoration: underline;
-            text-underline-offset: 2px;
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.5; }
+            100% { transform: translateX(200px) translateY(80px); opacity: 0; }
         }
     </style>
 </head>
 <body>
-
-<div class="swiper">
-    <div class="swiper-wrapper">
+    <div class="lp-cw" style="position:relative; z-index:1; width:100%">
         
-        <!-- ================= PAGE 1 ================= -->
-        <div class="swiper-slide">
-            <div class="deco" style="height: 60px;">· · ♡ · ·</div>
-            <div style="margin-bottom: 20px;">
-                <img src="https://i.imgur.com/RXCdx1s.gif" alt="Profile Image">
-            </div>
-            <div class="divider">✦✦✦✦✦</div>
-            
-            <div class="richtext" style="margin-bottom: 20px;">
-                <p><b>일교</b></p><p><br></p><p>성인 여성<br>일상·1차·2차</p><p><br></p><p><br></p><p>⟡ &nbsp;피로감 없는 즐거움을 추구합니다! 그때그때 좋아하는 것을 말하고,<br>　 서로 불쾌하지 않은 선에서 예의를 지키는 친근한 교류를 선호해요.</p><p><br></p><p>⟡&nbsp; 영화 같이 보기, 멀티 게임 등 ♥함께 하는 컨텐츠♥를 좋아합니다.<br>　 누구에게든 제안 편히 하고 받습니다.&nbsp;사람은 많을수록 좋다는 주의.</p><p><br></p><p>⟡&nbsp; 구두 약속은 깊게 생각하지 않고 언제 밥 한번 먹자 취급합니다.<br>　 다시 언질 주시면 상황에 따라 조정해요~ (특히 TRPG 공수표)</p><p><br></p><p>⟡&nbsp; 욕설트·우울트·네거티브 발언 과하면 친분을 막론하고 뮤트합니다.<br>　 등록한 단어 뮤트가 많아 씹히는 트윗도 많습니다.</p><p><br></p><p>⟡&nbsp; 트훔 및 캡박은 자유롭게...</p><p><br></p><p>⟡&nbsp; 근친·성인미자·NTR 등 소위 빻은 소재를 굉장히 좋아합니다.</p><p><br></p><p>　 <u>판타지를 소비하는 가상의 덕질과 현실 세계에 적용되는 윤리 간에는</u><br>　 <u>구분선이 있다</u>고 생각합니다. 다만, 이러한 요소들에는 가급적 뮤트용<br>　 키워드를 달고 있으니 불편하시다면 <i>단어 뮤트</i>를 부탁드립니다.<br><br></p>
-            </div>
-            
-            <details>
-                <summary>NG</summary>
-                <div class="details-content richtext">
-                    <p><br><span style="font-size: 10px;">⟡&nbsp;&nbsp;</span><b style="font-size: 10px;"><font color="#d66a6a">혈액 공포증</font></b><span style="font-size: 10px;">이 있습니다. 1D·2D는 OK.</span></p><p><br></p><p> 　<span style="font-size: 10px;">잔인한 요소가 포함된&nbsp;<b>3D·실사 컨텐츠</b>를 권하실 때는 경고를 부탁드려요.<br></span><span style="font-size: 10px;"> 　</span><i style="font-size: 10px;">컨디션이 안 좋을 때는 입술 뜯는 것만 봐도 (진짜) 실신합니다...</i></p><p><i style="font-size: 10px;"><br></i></p><p><span style="font-size: 10px;">⟡&nbsp; <b><font color="#d66a6a">집착</font></b></span><font color="#d66a6a"><span style="font-size: 10px;"><b>·</b></span></font><font color="#d66a6a" style="-webkit-text-size-adjust: 100%;"><span style="font-size: 10px;"><b>애정 요구&nbsp;</b></span></font><span style="-webkit-text-size-adjust: 100%; font-size: 10px;">힘들어합니다.</span></p><p><span style="font-size: 10px;"><br></span></p><p> 　<span style="font-size: 10px;">같은 이유로 앤관 안 맺습니다. (자컾, 앤오 관련 모두 뮤트해 두었습니다.)<br></span> 　<span style="font-size: 10px;">1차 관계도 장르처럼 생각합니다. 버닝이 끝난 장르에 미련 갖지 않으며,<br></span> 　<span style="font-size: 10px;">현재 마음이 가는 장르에 집중합니다. 균일한 애정 분배 불가능합니다.</span></p><p><br></p><p> 　<span style="font-size: 10px;">서로 부담 없이 생각날 때 간간이 언급하는 가볍고 긴 관계를 추구합니다.</span></p><p> 　<span style="font-size: 10px;">성향은 '잘못'이 아니라 생각하므로, 이에 대한 조율 요청 받지 않습니다.</span><span style="font-size: 10px;"><br></span><span style="text-size-adjust: 100%;"> 　</span><font size="1" style="text-size-adjust: 100%;">버닝 후 방치 성향이 맞지 않으신다면 부디 정리해주세요.</font></p><p><span style="font-size: 10px;"><br></span></p><p><span style="font-size: 10px;">⟡&nbsp; 여성 혐오, 퀴어 혐오, 인종차별(중국인 혐오), 지역차별, 과도한 루키즘 등<br></span> 　 <b style="font-size: 10px;">혐오성 발언</b><span style="font-size: 10px;">은&nbsp;</span><span style="font-size: 10px;">차단합니다. 정치적 올바름(PC)을 지향하고 있습니다.</span></p><p><span style="font-size: 10px;"><br></span></p><p><span style="font-size: 10px;">⟡&nbsp; 이외 조율 요청과 대화에 열려 있습니다.<br></span> 　 <span style="font-size: 10px;">제 언행에 있어 주고픈 의견이 있으시</span><span style="font-size: 10px; -webkit-text-size-adjust: 100%;">다면 언제든 편히 말씀 부탁드려요.</span></p><p>  　 <span style="font-size: 10px;">상호간 원만한 해결과 배려가 이루어질 수 있도록 적극 노력합니다.</span></p><p><span style="font-size: 10px;"><br></span></p>
+        <!-- Page 1 -->
+        <div class="lp-page on" id="lp-page-0" style="display:flex; flex-direction:column; gap:10px">
+            <div class="block">
+                <div style="position:relative; height:60px; overflow:hidden">
+                    <span style="position:absolute; left:0%; top:0%; font-size:8px; color:#8a8a8a; animation:shoot 1.5s linear infinite; animation-delay:0s; opacity:0">✦</span>
+                    <span style="position:absolute; left:15%; top:8%; font-size:10px; color:#8a8a8a; animation:shoot 2.5s linear infinite; animation-delay:0.8s; opacity:0">✦</span>
+                    <span style="position:absolute; left:30%; top:16%; font-size:12px; color:#8a8a8a; animation:shoot 3.5s linear infinite; animation-delay:1.6s; opacity:0">✦</span>
+                    <span style="position:absolute; left:45%; top:24%; font-size:8px; color:#8a8a8a; animation:shoot 1.5s linear infinite; animation-delay:2.4s; opacity:0">✦</span>
+                    <span style="position:absolute; left:60%; top:32%; font-size:10px; color:#8a8a8a; animation:shoot 2.5s linear infinite; animation-delay:3.2s; opacity:0">✦</span>
+                    <span style="position:absolute; left:75%; top:40%; font-size:12px; color:#8a8a8a; animation:shoot 3.5s linear infinite; animation-delay:4s; opacity:0">✦</span>
+                    <span style="position:absolute; left:90%; top:48%; font-size:8px; color:#8a8a8a; animation:shoot 1.5s linear infinite; animation-delay:4.8s; opacity:0">✦</span>
+                    <span style="position:absolute; left:105%; top:56%; font-size:10px; color:#8a8a8a; animation:shoot 2.5s linear infinite; animation-delay:5.6s; opacity:0">✦</span>
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; color:#8a8a8a; font-family:Georgia,serif; font-weight:600; z-index:1">· · ♡ · ·</div>
                 </div>
-            </details>
+            </div>
+            <div class="block">
+                <img src="https://i.imgur.com/RXCdx1s.gif" style="width:100%; display:block; border-radius:12px" alt="">
+            </div>
+            <div class="block">
+                <div style="display:flex; justify-content:center; gap:6px; padding:8px 0">
+                    <span style="font-size:8px; color:#8a8a8a55">✦</span>
+                    <span style="font-size:8px; color:#8a8a8a55">✦</span>
+                    <span style="font-size:8px; color:#8a8a8a">✦</span>
+                    <span style="font-size:8px; color:#8a8a8a55">✦</span>
+                    <span style="font-size:8px; color:#8a8a8a55">✦</span>
+                </div>
+            </div>
+            <div class="block">
+                <div style="padding:10px 14px; font-size:11.5px; color:#525252; line-height:1.7">
+                    <p><b>일교</b></p><p><br></p>
+                    <p>성인 여성<br>일상·1차·2차</p><p><br></p><p><br></p>
+                    <p>⟡ &nbsp;피로감 없는 즐거움을 추구합니다! 그때그때 좋아하는 것을 말하고,<br>&nbsp;　서로 불쾌하지 않은 선에서 예의를 지키는 친근한 교류를 선호해요.</p><p><br></p>
+                    <p>⟡&nbsp; 영화 같이 보기, 멀티 게임 등 ♥함께 하는 컨텐츠♥를 좋아합니다.<br>&nbsp;　누구에게든 제안 편히 하고 받습니다.&nbsp;사람은 많을수록 좋다는 주의.</p><p><br></p>
+                    <p>⟡&nbsp; 구두 약속은 깊게 생각하지 않고 언제 밥 한번 먹자 취급합니다.<br>&nbsp;　다시 언질 주시면 상황에 따라 조정해요~ (특히 TRPG 공수표)</p><p><br></p>
+                    <p>⟡&nbsp; 욕설트·우울트·네거티브 발언 과하면 친분을 막론하고 뮤트합니다.<br>&nbsp;　등록한 단어 뮤트가 많아 씹히는 트윗도 많습니다.</p><p><br></p>
+                    <p>⟡&nbsp; 트훔 및 캡박은 자유롭게...</p><p><br></p>
+                    <p>⟡&nbsp; 근친·성인미자·NTR 등 소위 빻은 소재를 굉장히 좋아합니다.</p><p><br></p>
+                    <p>&nbsp;　<u>판타지를 소비하는 가상의 덕질과 현실 세계에 적용되는 윤리 간에는</u><br>&nbsp;　<u>구분선이 있다</u>고 생각합니다. 다만, 이러한 요소들에는 가급적 뮤트용<br>&nbsp;　키워드를 달고 있으니 불편하시다면 <i>단어 뮤트</i>를 부탁드립니다.<br><br></p>
+                </div>
+            </div>
+            <div class="block">
+                <div style="background:#fff; border-radius:14px; border:2px solid #8a8a8a26">
+                    <details style="padding:14px 18px">
+                        <summary style="font-size:12px; font-weight:600; color:#8a8a8a; cursor:pointer">NG</summary>
+                        <div style="margin-top:10px; font-size:11px; color:#525252; line-height:1.8">
+<p><br><span style="font-size: 11px;">⟡&nbsp;&nbsp;</span><b style="font-size: 11px;"><font color="#d66a6a">혈액 공포증</font></b><span style="font-size: 11px;">이 있습니다. 1D·2D는 OK.</span></p><p><br></p>
+                            <p> &nbsp;　<span style="font-size: 11px;">잔인한 요소가 포함된&nbsp;<b>3D·실사 컨텐츠</b>를 권하실 때는 경고를 부탁드려요.<br></span><span style="font-size: 11px;"> &nbsp;　</span><i style="font-size: 11px;">컨디션이 안 좋을 때는 입술 뜯는 것만 봐도 (진짜) 실신합니다...</i></p><p><i style="font-size: 11px;"><br></i></p>
+                            <p><span style="font-size: 11px;">⟡&nbsp; <b><font color="#d66a6a">집착</font></b></span><font color="#d66a6a"><span style="font-size: 11px;"><b>·</b></span></font><font color="#d66a6a" style="-webkit-text-size-adjust: 100%;"><span style="font-size: 11px;"><b>애정 요구&nbsp;</b></span></font><span style="-webkit-text-size-adjust: 100%; font-size: 11px;">힘들어합니다.</span></p><p><span style="font-size: 11px;"><br></span></p>
+                            <p> &nbsp;　<span style="font-size: 11px;">같은 이유로 앤관 안 맺습니다. (자컾, 앤오 관련 모두 뮤트해 두었습니다.)<br></span> &nbsp;　<span style="font-size: 11px;">1차 관계도 장르처럼 생각합니다. 버닝이 끝난 장르에 미련 갖지 않으며,<br></span>&nbsp;　<span style="font-size: 11px;">현재 마음이 가는 장르에 집중합니다. 균일한 애정 분배 불가능합니다.</span></p><p><br></p>
+                            <p>&nbsp;　<span style="font-size: 11px;">서로 부담 없이 생각날 때 간간이 언급하는 가볍고 긴 관계를 추구합니다.</span></p>
+                            <p>&nbsp;　<span style="font-size: 11px;">성향은 '잘못'이 아니라 생각하므로, 이에 대한 조율 요청 받지 않습니다.</span><span style="font-size: 11px;"><br></span><span style="text-size-adjust: 100%;">&nbsp;　</span><span style="font-size: 11px; text-size-adjust: 100%;">버닝 후 방치 성향이 맞지 않으신다면 부디 정리해주세요.</span></p><p><span style="font-size: 11px;"><br></span></p>
+                            <p><span style="font-size: 11px;">⟡&nbsp; 여성 혐오, 퀴어 혐오, 인종차별(중국인 혐오), 지역차별, 과도한 루키즘 등<br></span> &nbsp;　<b style="font-size: 11px;">혐오성 발언</b><span style="font-size: 11px;">은&nbsp;</span><span style="font-size: 11px;">차단합니다. 정치적 올바름(PC)을 지향하고 있습니다.</span></p><p><span style="font-size: 11px;"><br></span></p>
+                            <p><span style="font-size: 11px;">⟡&nbsp; 이외 조율 요청과 대화에 열려 있습니다.<br></span> &nbsp;　<span style="font-size: 11px;">제 언행에 있어 주고픈 의견이 있으시</span><span style="font-size: 11px; -webkit-text-size-adjust: 100%;">다면 언제든 편히 말씀 부탁드려요.</span></p>
+                            <p> &nbsp;　<span style="font-size: 11px;">상호간 원만한 해결과 배려가 이루어질 수 있도록 적극 노력합니다.</span></p><p><span style="font-size: 11px;"><br></span></p>
+                        </div>
+                    </details>
+                </div>
+            </div>
         </div>
 
-        <!-- ================= PAGE 2 ================= -->
-        <div class="swiper-slide">
-            <!-- 회색 텍스트 및 선 구분선 적용 -->
-            <div class="heading tmi-heading">TMI</div>
-            <div class="tmi-divider">✦ ✦ ✦ ✦ ✦</div>
-
-            <details>
-                <summary>personal</summary>
-                <div class="details-content richtext">
-                    <ul><li><span style="font-size: 10px;">NCP = HL = BL ≥ GL<br>보통 같이 놀아주는 사람의 선호를 따라갑니다.</span></li><li><span style="font-size: 10px;">글</span><span style="font-size: 10px;">·</span><span style="font-size: 10px;">디자인</span><span style="font-size: 10px;">·코딩 야매로 일정 부분 가능합니다.<br>그림도 가능은 하지만 먼저 요구는 NG. (힘들어요)</span></li><li><span style="font-size: 10px;">에이로맨틱(무로맨틱) 성향이 강합니다.<br>설렘.. 두근.. 데이트.. 연애.. 알콩달콩.. ← 레전드 디스포리아</span></li></ul>
+        <!-- Page 2 -->
+        <div class="lp-page" id="lp-page-1" style="display:none; flex-direction:column; gap:10px">
+            <div class="block">
+                <div style="text-align:center; padding:12px 0">
+                    <div style="font-size:16px; font-weight:800; color:#8a8a8a; letter-spacing:3px">TMI</div>
                 </div>
-            </details>
-
-            <details>
-                <summary>1차</summary>
-                <div class="details-content richtext">
-                    <p></p><ul><li><span style="font-size: 10px;">기존 자관 &amp; TRPG</span></li><li><span style="font-size: 10px;">썰 &gt;&gt;&gt; 커미션 &gt; 연성.&nbsp;</span><span style="font-size: 10px; -webkit-text-size-adjust: 100%;">커미션은 넣기 전에 상의하는 것을 선호합니다.</span></li><li><span style="font-size: 10px;">TRPG는 쉬엄쉬엄 합니다. (시간이 없어서...)</span></li><li><span style="font-size: 10px;">사랑할 때 온 마음을 다해 과몰입하고 즐기는 편. 근본적으로 다른 사람과 1차적인 교류를 주고받는 놀이를 정말 좋아합니다. 같이 놀아주시면 기뻐요!</span></li></ul><div><span style="font-size: 10px;"><br></span></div><ul><li><span style="font-size: 10px;">단, 1차 관계에서의 정도와 선을 중시합니다. 타인의 마음/애정/관심을 통제하려는 시도는 정중히 사양합니다. 유해한 감정을 노출하기 전에 스스로 건강하게 갈무리하는 것도 성숙한 성인의 덕목이라 생각합니다.</span></li><li><span style="font-size: 10px;">타 계정 사찰하지 마세요...</span></li></ul><p></p>
+            </div>
+            <div class="block">
+                <div>
+                    <div style="height:60px; display:flex; align-items:center; justify-content:center; gap:12px; pointer-events:none">
+                        <div style="flex:1; height:1px; background:linear-gradient(to right,transparent,#8a8a8a40)"></div>
+                        <div style="display:flex; gap:6px; align-items:center">
+                            <span style="font-size:8px; color:#8a8a8a44">✦</span>
+                            <span style="font-size:12px; color:#8a8a8a66">✦</span>
+                            <span style="font-size:16px; color:#8a8a8a88">✦</span>
+                            <span style="font-size:12px; color:#8a8a8a66">✦</span>
+                            <span style="font-size:8px; color:#8a8a8a44">✦</span>
+                        </div>
+                        <div style="flex:1; height:1px; background:linear-gradient(to left,transparent,#8a8a8a40)"></div>
+                    </div>
                 </div>
-            </details>
-
-            <details>
-                <summary>2차</summary>
-                <div class="details-content richtext">
-                    <ul><li><span style="font-size: 10px;">웹소설</span><span style="font-size: 10px;">·만화·게임</span><span style="font-size: 10px;">·영화</span><span style="font-size: 10px;">·애니</span></li><li><span style="font-size: 10px;">대개 가볍게 즐기고 가볍게 흘려 보냅니다.</span></li><li><span style="font-size: 10px;">장르 추천도 가볍게 듣습니다. 영업하셔도 한다는 보장은 없지만 추천해주신다면 관심은 한번 가져보는 편입니다.</span></li></ul><div><span style="font-size: 10px;"><br></span></div><ul><li><span style="font-size: 10px;">♥️ : 스토리 좋은 컨텐츠, 휘몰아치는 정신병, 음기, 텍스트 많음, 가족애</span></li><li><span style="font-size: 10px;">❌ : 가챠 요소, 순정 만화, 오토메 게임 (일부 미연시는 ok), 약자를 향한 일방적&nbsp;</span><span style="font-size: 10px;">폭력</span></li></ul>
-                </div>
-            </details>
+            </div>
+<div class="block">
+                <details style="background:#fff; border-radius:14px; border:2px solid #8a8a8a26; padding:14px 18px">
+                    <summary style="font-size:12px; font-weight:600; color:#8a8a8a; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center">
+                        <span>personal</span><span style="font-size:11px; color:#8a8a8a80; padding:2px 8px; border-radius:6px; background:#8a8a8a14">펼치기 ▼</span>
+                    </summary>
+                    <div style="font-size:13px; color:#525252; margin-top:10px; padding-top:10px; border-top:1.5px solid #8a8a8a14; line-height:1.8">
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li><span style="font-size: 11px;">NCP = HL = BL ≥ GL<br>보통 같이 놀아주는 사람의 선호를 따라갑니다.</span></li>
+                            <li><span style="font-size: 11px;">글</span><span style="font-size: 11px;">·</span><span style="font-size: 11px;">디자인</span><span style="font-size: 11px;">·코딩 야매로 일정 부분 가능합니다.<br>그림도 가능은 하지만 먼저 요구는 NG. (힘들어요)</span></li>
+                            <li><span style="font-size: 11px;">에이로맨틱(무로맨틱) 성향이 강합니다.<br>설렘.. 두근.. 데이트.. 연애.. 알콩달콩.. ← 레전드 디스포리아</span></li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+            <div class="block">
+                <details style="background:#fff; border-radius:14px; border:2px solid #8a8a8a26; padding:14px 18px">
+                    <summary style="font-size:12px; font-weight:600; color:#8a8a8a; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center">
+                        <span>1차</span><span style="font-size:11px; color:#8a8a8a80; padding:2px 8px; border-radius:6px; background:#8a8a8a14">펼치기 ▼</span>
+                    </summary>
+                    <div style="font-size:13px; color:#525252; margin-top:10px; padding-top:10px; border-top:1.5px solid #8a8a8a14; line-height:1.8">
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li><span style="font-size: 11px;">기존 자관 &amp; TRPG</span></li>
+                            <li><span style="font-size: 11px;">썰 &gt;&gt;&gt; 커미션 &gt; 연성.&nbsp;</span><span style="font-size: 11px; -webkit-text-size-adjust: 100%;">커미션은 넣기 전에 상의하는 것을 선호합니다.</span></li>
+                            <li><span style="font-size: 11px;">TRPG는 쉬엄쉬엄 합니다. (시간이 없어서...)</span></li>
+                            <li><span style="font-size: 11px;">사랑할 때 온 마음을 다해 과몰입하고 즐기는 편. 근본적으로 다른 사람과　1차적 교류를 주고받는 놀이를 정말 좋아합니다. 같이 놀아주시면 기뻐요!</span></li>
+                        </ul>
+                        <div><span style="font-size: 11px;"><br></span></div>
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li><span style="font-size: 11px;">단, 1차 관계에서의 정도와 선을 중시합니다. 타인의 마음/애정/관심을 통제하려는 시도는 정중히 사양합니다. 유해한 감정을 노출하기 전에 스스로 건강하게 갈무리하는 것도 성숙한 성인의 덕목이라 생각합니다.</span></li>
+                            <li><span style="font-size: 11px;">타 계정 사찰하지 마세요. </span></li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+            <div class="block">
+                <details style="background:#fff; border-radius:14px; border:2px solid #8a8a8a26; padding:14px 18px">
+                    <summary style="font-size:12px; font-weight:600; color:#8a8a8a; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center">
+                        <span>2차</span><span style="font-size:11px; color:#8a8a8a80; padding:2px 8px; border-radius:6px; background:#8a8a8a14">펼치기 ▼</span>
+                    </summary>
+                    <div style="font-size:13px; color:#525252; margin-top:10px; padding-top:10px; border-top:1.5px solid #8a8a8a14; line-height:1.8">
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li><span style="font-size: 11px;">웹소설</span><span style="font-size: 11px;">·만화·게임</span><span style="font-size: 11px;">·영화</span><span style="font-size: 11px;">·애니</span></li>
+                            <li><span style="font-size: 11px;">대개 가볍게 즐기고 가볍게 흘려 보냅니다.</span></li>
+                            <li><span style="font-size: 11px;">장르 추천도 가볍게 듣습니다. 영업하셔도 한다는 보장은 없지만 추천해주신다면 관심은 한번 가져보는 편입니다.</span></li>
+                        </ul>
+                        <div><span style="font-size: 11px;"><br></span></div>
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li><span style="font-size: 11px;">♥️ : 스토리 좋은 컨텐츠, 휘몰아치는 정신병, 음기, 텍스트 많음, 가족애</span></li>
+                            <li><span style="font-size: 11px;">❌ : 가챠 요소, 순정 만화, 이입형 오토메, 약자를 향한 일방적&nbsp;</span><span style="font-size: 11px;">폭력</span></li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
         </div>
 
-        <!-- ================= PAGE 3 ================= -->
-        <div class="swiper-slide">
-                    <!-- ACCOUNT 타이틀과 구분선 추가 -->
-                    <div class="heading tmi-heading">ACCOUNT</div>
-                    <div class="tmi-divider">♥ ♥ ♥ ♥ ♥</div>
+        <!-- Page 3 -->
+        <div class="lp-page" id="lp-page-2" style="display:none; flex-direction:column; gap:10px">
 
-            <div class="richtext">
-                <p>⟡&nbsp; 계정 분리해서 사용합니다.</p>
-            </div>
-            
-            <div class="about-list">
-                <div class="about-item">
-                    <span class="about-label">본계</span>
-                    <span class="about-value">@1__GY0  일상 위주</span>
-                </div>
-                <div class="about-item">
-                    <span class="about-label">1차</span>
-                    <span class="about-value">@GY0_TRPG  & 그 외</span>
-                </div>
-                <div class="about-item">
-                    <span class="about-label">2차</span>
-                    <span class="about-value">주로 본계. 깊게 파면 장르마다 계정 분리</span>
+            <div class="block">
+                <div style="text-align:center; padding:12px 0">
+                    <div style="font-size:16px; font-weight:800; color:#8a8a8a; letter-spacing:3px">ACCOUNT</div>
                 </div>
             </div>
-
-            <div class="richtext" style="margin-top: 25px;">
-                <p>⟡&nbsp; 그 외 연락처</p>
-            </div>
-            
-            <div class="about-list">
-                <div class="about-item">
-                    <span class="about-label">디스코드</span>
-                    <span class="about-value">1__gyo</span>
-                </div>
-                <div class="about-item">
-                    <span class="about-label">오픈카톡</span>
-                    <span class="about-value"><a href="https://open.kakao.com/o/sITNnMkd" target="_blank" rel="noopener noreferrer">https://open.kakao.com/o/sITNnMkd</a></span>
+            <div class="block">
+                <div>
+                    <div style="height:60px; display:flex; align-items:center; justify-content:center; gap:12px; pointer-events:none">
+                        <div style="flex:1; height:1px; background:linear-gradient(to right,transparent,#8a8a8a40)"></div>
+                        <div style="display:flex; gap:6px; align-items:center">
+                            <span style="font-size:6px; color:#8a8a8a44">♥</span>
+                            <span style="font-size:9.5px; color:#8a8a8a66">♥</span>
+                            <span style="font-size:12px; color:#8a8a8a88">♥</span>
+                            <span style="font-size:9.5px; color:#8a8a8a66">♥</span>
+                            <span style="font-size:6px; color:#8a8a8a44">♥</span>
+                        </div>
+                        <div style="flex:1; height:1px; background:linear-gradient(to left,transparent,#8a8a8a40)"></div>
+                    </div>
                 </div>
             </div>
 
+            <div class="block">
+                <div style="padding:10px 14px; font-size:11px; color:#525252; line-height:1.7">
+                    ⟡&nbsp; 계정 분리해서 사용합니다.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div style="padding:16px; border-radius:14px; background:linear-gradient(135deg,#c2a3a310,#8a8a8a08); border:2px solid #8a8a8a26">
+                    <div style="display:flex; gap:8px; padding:8px 0; border-bottom:1px dashed #8a8a8a26">
+                        <span style="font-size:10px; font-weight:700; color:#8a8a8a; min-width:60px; flex-shrink:0">본계</span>
+                        <span style="font-size:11px; color:#525252; flex:1; word-break:break-word">@1__GY0  일상 위주</span>
+                    </div>
+                    <div style="display:flex; gap:8px; padding:8px 0; border-bottom:1px dashed #8a8a8a26">
+                        <span style="font-size:10px; font-weight:700; color:#8a8a8a; min-width:60px; flex-shrink:0">1차</span>
+                        <span style="font-size:11px; color:#525252; flex:1; word-break:break-word">@GY0_TRPG  &amp; 그 외</span>
+                    </div>
+                    <div style="display:flex; gap:8px; padding:8px 0; border-bottom:none">
+                        <span style="font-size:10px; font-weight:700; color:#8a8a8a; min-width:60px; flex-shrink:0">2차</span>
+                        <span style="font-size:11px; color:#525252; flex:1; word-break:break-word">주로 본계. 깊게 파면 장르마다 계정 분리</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div style="padding:10px 14px; font-size:11px; color:#525252; line-height:1.7">
+                    <p>⟡&nbsp; 그 외 연락처</p>
+                </div>
+            </div>
+            <div class="block">
+                <div style="padding:16px; border-radius:14px; background:linear-gradient(135deg,#c2a3a310,#8a8a8a08); border:2px solid #8a8a8a26">
+                    <div style="display:flex; gap:8px; padding:8px 0; border-bottom:1px dashed #8a8a8a26">
+                        <span style="font-size:10px; font-weight:700; color:#8a8a8a; min-width:60px; flex-shrink:0">디스코드</span>
+                        <span style="font-size:11px; color:#525252; flex:1; word-break:break-word">1__gyo</span>
+                    </div>
+                    <div style="display:flex; gap:8px; padding:8px 0; border-bottom:none">
+                        <span style="font-size:10px; font-weight:700; color:#8a8a8a; min-width:60px; flex-shrink:0">오픈카톡</span>
+                        <span style="font-size:11px; color:#525252; flex:1; word-break:break-word">https://open.kakao.com/o/sITNnMkd</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div>
+                    <div style="height:102px; position:relative; overflow:hidden; pointer-events:none">
+                        <span style="position:absolute; left:0%; top:-10px; font-size:8px; color:#8a8a8a1e; animation:fall 2s linear infinite; animation-delay:0s">♡</span>
+                        <span style="position:absolute; left:15.5%; top:-10px; font-size:11px; color:#8a8a8a26; animation:fall 3s linear infinite; animation-delay:0.4s">♡</span>
+                        <span style="position:absolute; left:31%; top:-10px; font-size:14px; color:#8a8a8a2e; animation:fall 4s linear infinite; animation-delay:0.8s">♡</span>
+                        <span style="position:absolute; left:37.5%; top:-10px; font-size:17px; color:#8a8a8a36; animation:fall 2s linear infinite; animation-delay:1.2s">♡</span>
+                        <span style="position:absolute; left:53%; top:-10px; font-size:8px; color:#8a8a8a3e; animation:fall 3s linear infinite; animation-delay:1.6s">♡</span>
+                        <span style="position:absolute; left:68.5%; top:-10px; font-size:11px; color:#8a8a8a46; animation:fall 4s linear infinite; animation-delay:2s">♡</span>
+                        <span style="position:absolute; left:75%; top:-10px; font-size:14px; color:#8a8a8a4e; animation:fall 2s linear infinite; animation-delay:2.4s">♡</span>
+                        <span style="position:absolute; left:90.5%; top:-10px; font-size:17px; color:#8a8a8a56; animation:fall 3s linear infinite; animation-delay:2.8s">♡</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div style="display:flex; justify-content:center; align-items:center; gap:12px; padding:16px 0; margin-top:12px">
+            <button onclick="lpNav(-1)" style="background:none; border:none; font-size:16px; color:#8a8a8a; cursor:pointer">←</button>
+            <div id="lp-dots" style="display:flex; gap:6px">
+                <button onclick="lpGo(0)" class="lp-dot" style="width:20px; height:8px; border-radius:4px; background:#8a8a8a; border:none; cursor:pointer; transition:all .2s"></button>
+                <button onclick="lpGo(1)" class="lp-dot" style="width:8px; height:8px; border-radius:4px; background:#8a8a8a26; border:none; cursor:pointer; transition:all .2s"></button>
+                <button onclick="lpGo(2)" class="lp-dot" style="width:8px; height:8px; border-radius:4px; background:#8a8a8a26; border:none; cursor:pointer; transition:all .2s"></button>
+            </div>
+            <button onclick="lpNav(1)" style="background:none; border:none; font-size:16px; color:#8a8a8a; cursor:pointer">→</button>
         </div>
 
     </div>
 
-    <!-- 하단 페이지 인디케이터 및 좌우 화살표 -->
-    <div class="nav-container">
-        <div class="custom-prev">←</div>
-        <div class="swiper-pagination"></div>
-        <div class="custom-next">→</div>
-    </div>
+    <!-- Essential Scripts for Layout and Animations -->
+    <script>
+        // Pagination logic
+        var lpCur = 0, lpMax = 3;
+        function lpGo(n) {
+            document.querySelectorAll(".lp-page").forEach(function(p, i) {
+                p.style.display = i === n ? "flex" : "none";
+            });
+            document.querySelectorAll(".lp-dot").forEach(function(d, i) {
+                d.style.width = i === n ? "20px" : "8px";
+                d.style.background = i === n ? "#8a8a8a" : "#8a8a8a26";
+            });
+            lpCur = n;
+            var _sp = document.getElementById("lp-page-" + n);
+            if(_sp) _sp.scrollTop = 0;
+            window.scrollTo(0, 0);
+        }
+        
+        function lpNav(d) {
+            lpGo(Math.max(0, Math.min(lpMax - 1, lpCur + d)));
+        }
 
-</div>
-
-<!-- Swiper JS 라이브러리 -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-    const swiper = new Swiper('.swiper', {
-        autoHeight: true,       
-        spaceBetween: 20,       
-        speed: 400,             
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,    
-        },
-        navigation: {
-            nextEl: '.custom-next',
-            prevEl: '.custom-prev',
-        },
-    });
-
-    const detailsElements = document.querySelectorAll('details');
-    detailsElements.forEach(detail => {
-        detail.addEventListener('toggle', () => {
-            swiper.updateAutoHeight(300);
-        });
-    });
-</script>
-
+        // Scroll animation logic (IntersectionObserver)
+        (function() {
+            var obs = new IntersectionObserver(function(es) {
+                es.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("show");
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            
+            function scanBlocks() {
+                document.querySelectorAll(".block:not(.show)").forEach(function(el) {
+                    obs.observe(el);
+                });
+            }
+            
+            scanBlocks();
+            
+            new MutationObserver(function() {
+                setTimeout(scanBlocks, 60);
+            }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style", "class"] });
+        }());
+    </script>
 </body>
 </html>
